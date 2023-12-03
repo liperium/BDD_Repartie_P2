@@ -1,0 +1,1 @@
+docker run -p 8888:8888 -v .:/home/jovyan/work --name spark jupyter/pyspark-notebook
