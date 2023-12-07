@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 cd tsv
 curl -o basics.gz https://datasets.imdbws.com/title.basics.tsv.gz
