@@ -3,7 +3,7 @@ from mrjob.step import MRStep
 
 class TitreCount(MRJob):
     def mapper(self, _, line):
-        # Split the line into fields
+        # On divise les champs de l'entrée.
         fields = line.split("\t")
 
         # Extraction de titres et des années 
@@ -15,26 +15,28 @@ class TitreCount(MRJob):
                 yield start_year, 1
 
     def reducer(self, start_year, counts):
-        # Somme des occurrences
+        # Somme des occurrences.
         yield start_year, sum(counts)
 
     def mapper_sort(self, start_year, count):
-        # Vérifie si start_year n'est pas manquant avant de le convertir
+        # Vérifie si start_year n'est pas manquant avant de le convertir.
         if start_year != "\\N":
             yield None, (int(start_year), count)
 
     def reducer_sort(self, _, year_count_pairs):
-        # Trie les résultats par année
+        # Trie les résultats par année croissante.
         sorted_pairs = sorted(year_count_pairs)
 
-        # Émet les résultats triés
+        # Émet les résultats triés.
         for start_year, count in sorted_pairs:
             yield str(start_year), count
 
     def steps(self):
         return [
+            # Produit les résultats dans un ordre aléatoire
             MRStep(mapper=self.mapper,
                    reducer=self.reducer),
+            # Trie les résultats dans un ordre croissant, mapper_sort garanti des résultats ce qui n'est pas le cas du reducer
             MRStep(mapper=self.mapper_sort,
                    reducer=self.reducer_sort)
         ]

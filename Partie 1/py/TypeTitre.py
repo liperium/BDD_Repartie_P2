@@ -3,32 +3,32 @@ from mrjob.step import MRStep
 
 class TitreCount(MRJob):
     def mapper(self, _, line):
-        # Split the line into fields
+        # On divise les champs de l'entrée.
         fields = line.split("\t")
         
-        # Extract the title type
+        # Extraction des noms des titres et mise du champ à 1.
         title_type = fields[1]
         
-        # Emit a count of 1 for the title type
         yield(title_type, 1)
             
     def reducer(self, title_type, counts):
-        # Sum the counts for each title type
         total_count = sum(counts)
         
-        # Emit the total count as the key for sorting
+        # Agrège les résultats pour avoir nombre total de chaque film.
         yield None, (total_count, title_type)
 
     def reducer_sort(self, _, count_title_pairs):
-        # Sort the results by total count in descending order
+        
+        # Trie des valeurs par ordre décroissant.
         sorted_pairs = sorted(count_title_pairs, reverse=True)
         
-        # Emit the sorted results
+        # Résultat final.
         for count, title_type in sorted_pairs:
             yield title_type, count
 
     def steps(self):
         return [
+            #Découpage en 2 phases : traitement puis tri.
             MRStep(mapper=self.mapper,
                    reducer=self.reducer),
             MRStep(reducer=self.reducer_sort)

@@ -1,12 +1,13 @@
 from mrjob.job import MRJob
 from mrjob.step import MRStep
 
+# Définition des intervalles
 intervals = [[0.0, 1.0], [1.0, 2.0], [2.0, 3.0], [3.0, 4.0], [4.0, 5.0], [5.0, 6.0], [6.0, 7.0], [7.0, 8.0], [8.0, 9.0], [9.0, 10.0]]
 
 class RatingRangeCount(MRJob):
 
     def mapper(self, _, line):
-        # Split the line into fields
+        # On divise les champs de l'entrée.
         fields = line.split("\t")
 
         if fields[1] == 'averageRating':
@@ -14,6 +15,7 @@ class RatingRangeCount(MRJob):
         # Extraction de titres et des années 
         rating = float(fields[1])
 
+        # Ajout d'un indice représentant chaque intervalle
         for i in range(0, len(intervals)):
             if rating <= intervals[i][1] and rating > intervals[i][0]:
                 yield (i, 1)  # Utilise l'indice i pour permettre le tri
