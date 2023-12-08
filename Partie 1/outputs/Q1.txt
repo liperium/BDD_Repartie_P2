@@ -1,0 +1,12 @@
+"tvEpisode"	7933343
+"short"	966076
+"movie"	665326
+"video"	283874
+"tvSeries"	253421
+"tvMovie"	143645
+"tvMiniSeries"	51462
+"tvSpecial"	44686
+"videoGame"	36686
+"tvShort"	10109
+"tvPilot"	1
+"titleType"	1

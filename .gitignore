@@ -4,3 +4,4 @@
 Partie 1/tsv/basics.gz
 Partie 1/tsv/data.gz
 .gitignore
+__pycache__

@@ -40,6 +40,3 @@ class TitreCount(MRJob):
             MRStep(mapper=self.mapper_sort,
                    reducer=self.reducer_sort)
         ]
-
-if __name__ == '__main__':
-    TitreCount.run()

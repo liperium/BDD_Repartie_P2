@@ -10,10 +10,8 @@ class RatingRangeCount(MRJob):
         # On divise les champs de l'entrée.
         fields = line.split("\t")
 
-        if fields[1] == 'averageRating':
-            return
-        # Extraction de titres et des années 
-        rating = float(fields[1])
+        # Extraction de ratings
+        rating = float(fields[2])
 
         # Ajout d'un indice représentant chaque intervalle
         for i in range(0, len(intervals)):
@@ -45,6 +43,4 @@ class RatingRangeCount(MRJob):
             MRStep(mapper=self.mapper_sort,
                    reducer=self.reducer_sort)
         ]
-
-if __name__ == '__main__':
-    RatingRangeCount.run()
+    

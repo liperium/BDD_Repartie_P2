@@ -33,6 +33,3 @@ class TitreCount(MRJob):
                    reducer=self.reducer),
             MRStep(reducer=self.reducer_sort)
         ]
-
-if __name__ == '__main__':
-    TitreCount.run()
